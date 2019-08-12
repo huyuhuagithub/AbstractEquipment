@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper\ConvertFrom\ConvertFrom.cs" />
+    <Compile Include="Helper\Excel\ExcelHelper.cs" />
     <Compile Include="Helper\INIFileSet\ctlINI.cs" />
     <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="Helper\Other.cs" />

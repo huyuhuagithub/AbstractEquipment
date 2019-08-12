@@ -57,6 +57,7 @@
     <Compile Include="CANEquipment\CANAbstract.cs" />
     <Compile Include="CANEquipment\USBCAN-2I.cs" />
     <Compile Include="RS232Equipment\BT001.cs" />
+    <Compile Include="RS232Equipment\J050yingtai.cs" />
     <Compile Include="RS232Equipment\M2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RS232Equipment\ShieldBox.cs" />

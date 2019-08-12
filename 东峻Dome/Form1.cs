@@ -34,8 +34,12 @@ namespace 东峻Dome
 
 
             //Displytb.Text = ConvertFrom.ByteArrayToString(new byte[] { 48, 49, 50, 51, 52, 53, 65, 66, 67, 68 }, Encoding.ASCII);
-            //Displytb.Text += ConvertFrom.HexStringToString("ec a0 45 2d 43 61 72 78", Encoding.ASCII);
-
+            string btadd = "21 62 09 00 00 0D E9 08 22 62 A5 B7 00 00 00 00 22 62 A5 B7 00 00 00 00";
+           string ssss= substrings(btadd);
+            btadd.Substring(0);
+               string ss = ConvertFrom.HexStringToString("ec a0 45 2d 43 61 72 78 ec a0 45 2d 43 61 72 78", Encoding.ASCII);
+            
+            Displytb.Text = ss;
             //77B 91 70 35 00 31 39 30 33 
 
 
@@ -52,7 +56,7 @@ namespace 东峻Dome
             //test1.TestItem.Add("345", "test2");
             //test1.TestItem.Add("456", "test3");
 
-            //test1.CANIndex = 0;
+            //test1.CANIndex = 0;B
             //string s = JsonHelper.ObjToJsonString(test1);
             //WriteLog.WriteLogFile(s);
             //test test2 = JsonHelper.JsonToObj<test>(s);
@@ -65,7 +69,19 @@ namespace 东峻Dome
             //}
 
         }
-
+        string newstr = null;
+        public string substrings(string str)
+        {
+            string repp = str.Replace(" ", "");
+            newstr = repp.Remove(repp.Length / 2, 4);
+            int i = newstr.Length;
+            if (repp.Length > repp.Length-4)
+            {
+                substrings(newstr);
+            }
+            return newstr.Substring(8,newstr.Length-8);
+        }
+        
         public string  CANG<T>(T t) where T : CANAbstract
         {
             string dataResult="";

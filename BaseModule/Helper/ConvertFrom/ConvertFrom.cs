@@ -54,6 +54,39 @@ namespace BaseModule.Helper.ConvertFrom
             return text;
         }
 
+        public static string ArrayToHexString<T>(T [] arrays)
+        {
+            string text = string.Empty;
+            try
+            {
+                for (int i = 0; i < arrays.Length; i++)
+                {
+                    text = text + " " + string.Format("{0:X2}", arrays[i]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("转换异常" + ex);
+            }
+            text = text.Trim() + "\r\n";
+            return text;
+        }
+
+        public static List<byte> HexstringToBytesArray(string command)
+        {
+            List<byte> list = new List<byte>();
+            string[] array = command.Split(new char[]
+            {
+                ' '
+            });
+            for (int i = 0; i < array.Length; i++)
+            {
+                list.Add(Convert.ToByte(array[i], 16));
+            }
+            return list;
+        }
+
+
         public static string ByteArrayToString(byte[] ByteList,Encoding encoding)
         {
             string result = string.Empty;

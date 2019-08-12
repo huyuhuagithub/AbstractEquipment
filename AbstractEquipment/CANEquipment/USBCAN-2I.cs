@@ -13,9 +13,9 @@ namespace AbstractEquipment.CANEquipment
 
         protected struct VCI_INIT_CONFIG
         {
-            public UInt32 AccCode;//验收代码
-            public UInt32 AccMask;//屏蔽代码
-            public UInt32 Reserved;//保留位
+            public uint AccCode;//验收代码
+            public uint AccMask;//屏蔽代码
+            public uint Reserved;//保留位
             public byte Filter;//滤波方式，1 表示单滤波，0 表示双滤波
             public byte Timing0;
             public byte Timing1;
@@ -106,10 +106,12 @@ namespace AbstractEquipment.CANEquipment
                                     for (int d = 0; d < len; d++)
                                     {
                                         Data_Frame.Add(obj.Data[d]);
+                                       
                                     }
+                                    Data_Frame.RemoveRange(0, 2);
                                 }
                             }
-                            dataStrList = ConvertFrom.UintArrayToHexString(Data_Frame.ToArray());
+                            dataStrList = ConvertFrom.ArrayToHexString(Data_Frame.ToArray());
                         }
                     }
                         #region old
@@ -174,36 +176,15 @@ namespace AbstractEquipment.CANEquipment
                     ExternFlag = 0,//是否是扩展帧。
                     TimeFlag = 1//是否使用时间标识，为 1 时 TimeStamp 有效，TimeFlag 和 TimeStamp 只在此帧为接收帧时有意义
                 };
-                VCI_CAN_OBJ[] vCI_CAN_OBJ = new VCI_CAN_OBJ []
-                {
-                    new VCI_CAN_OBJ()
-                {
-                    SendType = 2,//=0时为正常发送，=1时为单次发送，=2时为自发自收，=3时为单次自发自收，只在此帧为发送帧时有意义。
-                    ID = frameid,//帧ID
-                    DataLen = 8,//数据长度
-                    RemoteFlag = 0,//是否是远程帧
-                    ExternFlag = 0,//是否是扩展帧。
-                    TimeFlag = 1//是否使用时间标识，为 1 时 TimeStamp 有效，TimeFlag 和 TimeStamp 只在此帧为接收帧时有意义
-                },
-                    new VCI_CAN_OBJ()
-                {
-                    SendType = 2,//=0时为正常发送，=1时为单次发送，=2时为自发自收，=3时为单次自发自收，只在此帧为发送帧时有意义。
-                    ID = frameid,//帧ID
-                    DataLen = 8,//数据长度
-                    RemoteFlag = 0,//是否是远程帧
-                    ExternFlag = 0,//是否是扩展帧。
-                    TimeFlag = 1//是否使用时间标识，为 1 时 TimeStamp 有效，TimeFlag 和 TimeStamp 只在此帧为接收帧时有意义
-                },
-            };
+            
                 string strdata = Data;
                 int len = (strdata.Length + 1) / 3;
                 List<byte> bytelist = new List<byte>();
                 for (int t = 0; t < len; t++)
                 {
-                    bytelist.Add(System.Convert.ToByte("0x" + strdata.Substring(t * 3, 2), 16));
+                    //bytelist.Add(Convert.ToByte("0x" + strdata.Substring(t * 3, 2), 16));
+                    bytelist = ConvertFrom.HexstringToBytesArray(Data);
                     sendobj.Data[t] = bytelist[t];
-
-                    //vCI_CAN_OBJ[0].Data[t] = bytelist[t];
                 }
                 if (VCI_Transmit(deviceType, deviceIndex, cANIndex, ref sendobj, 2) == 1)
                 {
